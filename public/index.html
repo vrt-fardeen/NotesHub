@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotesHub - Academic Notes Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-book-open"></i>
+                <span>NotesHub</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+                <a href="#programs" class="nav-link" data-section="programs">
+                    <i class="fas fa-graduation-cap"></i>
+                    Programs
+                </a>
+                <a href="#semesters" class="nav-link" data-section="semesters">
+                    <i class="fas fa-calendar-alt"></i>
+                    Semesters
+                </a>
+                                 <a href="#notes" class="nav-link" data-section="notes">
+                     <i class="fas fa-sticky-note"></i>
+                     Notes
+                 </a>
+                 <a href="#view-note" class="nav-link" data-section="view-note" style="display: none;">
+                     <i class="fas fa-eye"></i>
+                     View Note
+                 </a>
+                 <a href="#program-detail" class="nav-link" data-section="program-detail" style="display: none;">
+                     <i class="fas fa-graduation-cap"></i>
+                     Program Details
+                 </a>
+                 <a href="#semester-detail" class="nav-link" data-section="semester-detail" style="display: none;">
+                     <i class="fas fa-calendar-alt"></i>
+                     Semester Details
+                 </a>
+                 <a href="#subject-detail" class="nav-link" data-section="subject-detail" style="display: none;">
+                     <i class="fas fa-book"></i>
+                     Subject Details
+                 </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+            <div class="container">
+                <h1 class="section-title">Dashboard</h1>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalPrograms">0</h3>
+                            <p>Programs</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalSemesters">0</h3>
+                            <p>Semesters</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-sticky-note"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalNotes">0</h3>
+                            <p>Notes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalSubjects">0</h3>
+                            <p>Subjects</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-notes">
+                    <h2>Recent Notes</h2>
+                    <div id="recentNotesList" class="notes-grid">
+                        <!-- Recent notes will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Programs Section -->
+        <section id="programs" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title">Programs</h1>
+                    <button class="btn btn-primary" onclick="openModal('programModal')">
+                        <i class="fas fa-plus"></i>
+                        Add Program
+                    </button>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" id="programSearch" placeholder="Search programs..." class="search-input">
+                    <button class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+
+                <div id="programsList" class="programs-grid">
+                    <!-- Programs will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Semesters Section -->
+        <section id="semesters" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title">Semesters</h1>
+                    <button class="btn btn-primary" onclick="openModal('semesterModal')">
+                        <i class="fas fa-plus"></i>
+                        Add Semester
+                    </button>
+                </div>
+
+                <div class="filters">
+                    <select id="programFilter" class="filter-select">
+                        <option value="">All Programs</option>
+                    </select>
+                    <select id="yearFilter" class="filter-select">
+                        <option value="">All Years</option>
+                    </select>
+                </div>
+
+                <div id="semestersList" class="semesters-grid">
+                    <!-- Semesters will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Notes Section -->
+        <section id="notes" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h1 class="section-title">Notes</h1>
+                    <button class="btn btn-primary" onclick="openModal('noteModal')">
+                        <i class="fas fa-plus"></i>
+                        Add Note
+                    </button>
+                </div>
+
+                <div class="filters">
+                    <input type="text" id="noteSearch" placeholder="Search notes..." class="search-input">
+                    <select id="noteProgramFilter" class="filter-select">
+                        <option value="">All Programs</option>
+                    </select>
+                    <select id="noteSemesterFilter" class="filter-select">
+                        <option value="">All Semesters</option>
+                    </select>
+                    <select id="noteSubjectFilter" class="filter-select">
+                        <option value="">All Subjects</option>
+                    </select>
+                </div>
+
+                <div id="notesList" class="notes-grid">
+                    <!-- Notes will be loaded here -->
+                </div>
+
+                <div class="pagination">
+                    <button id="prevPage" class="btn btn-secondary">Previous</button>
+                    <span id="pageInfo">Page 1 of 1</span>
+                    <button id="nextPage" class="btn btn-secondary">Next</button>
+                                 </div>
+             </div>
+         </section>
+
+         <!-- View Note Section -->
+         <section id="view-note" class="section">
+             <div class="container">
+                 <div class="section-header">
+                     <button class="btn btn-secondary" onclick="goBackToNotes()">
+                         <i class="fas fa-arrow-left"></i>
+                         Back to Notes
+                     </button>
+                     <div class="note-actions">
+                         <button class="btn btn-primary" onclick="editCurrentNote()">
+                             <i class="fas fa-edit"></i>
+                             Edit Note
+                         </button>
+                         <button class="btn btn-danger" onclick="deleteCurrentNote()">
+                             <i class="fas fa-trash"></i>
+                             Delete Note
+                         </button>
+                     </div>
+                 </div>
+
+                 <div id="noteViewContent" class="note-view-content">
+                     <!-- Note content will be loaded here -->
+                 </div>
+             </div>
+         </section>
+
+         <!-- Program Detail Section -->
+         <section id="program-detail" class="section">
+             <div class="container">
+                 <div class="section-header">
+                     <button class="btn btn-secondary" onclick="goBackToPrograms()">
+                         <i class="fas fa-arrow-left"></i>
+                         Back to Programs
+                     </button>
+                     <h1 id="programDetailTitle">Program Details</h1>
+                 </div>
+                 <div class="program-detail-content">
+                     <div class="program-info-card">
+                         <h2 id="programDetailName">Program Name</h2>
+                         <p id="programDetailDescription">Program description will appear here</p>
+                         <div class="program-stats">
+                             <div class="stat-item">
+                                 <i class="fas fa-calendar-alt"></i>
+                                 <span id="programSemesterCount">0 Semesters</span>
+                             </div>
+                             <div class="stat-item">
+                                 <i class="fas fa-sticky-note"></i>
+                                 <span id="programNotesCount">0 Notes</span>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="semesters-grid" id="programSemestersList">
+                         <!-- Semesters will be loaded here -->
+                     </div>
+                 </div>
+             </div>
+         </section>
+
+         <!-- Semester Detail Section -->
+         <section id="semester-detail" class="section">
+             <div class="container">
+                 <div class="section-header">
+                     <button class="btn btn-secondary" onclick="goBackToProgramDetail()">
+                         <i class="fas fa-arrow-left"></i>
+                         Back to Program
+                     </button>
+                     <h1 id="semesterDetailTitle">Semester Details</h1>
+                 </div>
+                 <div class="semester-detail-content">
+                     <div class="semester-info-card">
+                         <h2 id="semesterDetailName">Semester Name</h2>
+                         <p id="semesterDetailProgram">Program: Program Name</p>
+                         <div class="semester-stats">
+                             <div class="stat-item">
+                                 <i class="fas fa-book"></i>
+                                 <span id="semesterSubjectCount">0 Subjects</span>
+                             </div>
+                             <div class="stat-item">
+                                 <i class="fas fa-sticky-note"></i>
+                                 <span id="semesterNotesCount">0 Notes</span>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="subjects-grid" id="semesterSubjectsList">
+                         <!-- Subjects will be loaded here -->
+                     </div>
+                 </div>
+             </div>
+         </section>
+
+         <!-- Subject Detail Section -->
+         <section id="subject-detail" class="section">
+             <div class="container">
+                 <div class="section-header">
+                     <button class="btn btn-secondary" onclick="goBackToSemesterDetail()">
+                         <i class="fas fa-arrow-left"></i>
+                         Back to Semester
+                     </button>
+                     <h1 id="subjectDetailTitle">Subject Details</h1>
+                 </div>
+                 <div class="subject-detail-content">
+                     <div class="subject-info-card">
+                         <h2 id="subjectDetailName">Subject Name</h2>
+                         <p id="subjectDetailProgram">Program: Program Name</p>
+                         <p id="subjectDetailSemester">Semester: Semester Name</p>
+                         <div class="subject-stats">
+                             <div class="stat-item">
+                                 <i class="fas fa-sticky-note"></i>
+                                 <span id="subjectNotesCount">0 Notes</span>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="notes-grid" id="subjectNotesList">
+                         <!-- Notes will be loaded here -->
+                     </div>
+                 </div>
+             </div>
+         </section>
+     </main>
+
+    <!-- Modals -->
+    <!-- Program Modal -->
+    <div id="programModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Program</h2>
+                <span class="close" onclick="closeModal('programModal')">&times;</span>
+            </div>
+            <form id="programForm" class="modal-form">
+                <div class="form-group">
+                    <label for="programName">Program Name</label>
+                    <input type="text" id="programName" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="programCode">Program Code</label>
+                    <input type="text" id="programCode" name="code" required>
+                </div>
+                <div class="form-group">
+                    <label for="programDescription">Description</label>
+                    <textarea id="programDescription" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="programDuration">Duration (semesters)</label>
+                    <input type="number" id="programDuration" name="duration" min="1" max="12" value="8">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('programModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Program</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Semester Modal -->
+    <div id="semesterModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Semester</h2>
+                <span class="close" onclick="closeModal('semesterModal')">&times;</span>
+            </div>
+            <form id="semesterForm" class="modal-form">
+                <div class="form-group">
+                    <label for="semesterName">Semester Name</label>
+                    <input type="text" id="semesterName" name="name" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="semesterNumber">Semester Number</label>
+                        <input type="number" id="semesterNumber" name="number" min="1" max="12" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="semesterYear">Academic Year</label>
+                        <input type="text" id="semesterYear" name="academicYear" placeholder="2024-2025" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="semesterProgram">Program</label>
+                    <select id="semesterProgram" name="program" required>
+                        <option value="">Select Program</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="semesterStartDate">Start Date</label>
+                        <input type="date" id="semesterStartDate" name="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="semesterEndDate">End Date</label>
+                        <input type="date" id="semesterEndDate" name="endDate" required>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('semesterModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Semester</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Note Modal -->
+    <div id="noteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Note</h2>
+                <span class="close" onclick="closeModal('noteModal')">&times;</span>
+            </div>
+            <form id="noteForm" class="modal-form">
+                <div class="form-group">
+                    <label for="noteTitle">Title</label>
+                    <input type="text" id="noteTitle" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="noteContent">Content</label>
+                    <textarea id="noteContent" name="content" rows="6" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="noteProgram">Program</label>
+                        <select id="noteProgram" name="program" required>
+                            <option value="">Select Program</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="noteSemester">Semester</label>
+                        <select id="noteSemester" name="semester" required>
+                            <option value="">Select Semester</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="noteSubject">Subject</label>
+                    <input type="text" id="noteSubject" name="subject" required placeholder="Enter subject name">
+                </div>
+                <div class="form-group">
+                    <label for="noteTags">Tags (comma-separated)</label>
+                    <input type="text" id="noteTags" name="tags" placeholder="programming, algorithms, data-structures">
+                </div>
+                <div class="form-group">
+                    <label for="noteAuthor">Author</label>
+                    <input type="text" id="noteAuthor" name="author" value="Anonymous">
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="noteIsPublic" name="isPublic">
+                        Make this note public
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('noteModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Note</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
